@@ -2,6 +2,8 @@ import { GoogleAuthProvider, GithubAuthProvider, signInWithPopup, onAuthStateCha
 import auth from "../../firebase/firebase.config";
 import { createContext, useEffect, useState } from "react";
 export const AuthContext = createContext(null);
+
+
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const googleProvider = new GoogleAuthProvider();
