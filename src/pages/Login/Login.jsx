@@ -8,17 +8,24 @@ import {
 } from "@material-tailwind/react";
 import { useContext } from "react";
 import { IoLogoGithub, IoLogoGoogle } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate, } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider/AuthProvider";
 
 export default function Login() {
     const { googleSignIn, githubSignIn, signInEmailPassword } = useContext(AuthContext);
+    const location = useLocation();
+    const state = location.state;
 
+    const navigate = useNavigate();
+
+
+    console.log(location);
     // Handle google Login
     const handleGoogle = () => {
         googleSignIn()
             .then((result) => {
-                alert("success")
+                alert("success");
+                navigate(state ? state : "/");
             }).catch((error) => {
                 alert(error.message)
             });
@@ -28,7 +35,8 @@ export default function Login() {
     const handleGithub = () => {
         githubSignIn()
             .then((result) => {
-                alert("success")
+                alert("success");
+                navigate(state ? state : "/");
             }).catch((error) => {
                 alert(error.message)
             });
@@ -39,9 +47,10 @@ export default function Login() {
         e.preventDefault();
         const email = e.target.email.value;
         const password = e.target.password.value;
-        signInEmailPassword(email,password)
+        signInEmailPassword(email, password)
             .then((result) => {
-                alert("success")
+                alert("success");
+                navigate(state ? state : "/");
             }).catch((error) => {
                 alert(error.message)
             });
