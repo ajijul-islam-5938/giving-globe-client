@@ -4,9 +4,35 @@ import {
     Checkbox,
     Typography,
 } from "@material-tailwind/react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../Providers/AuthProvider/AuthProvider";
+import auth from "../../firebase/firebase.config";
+import { updateProfile } from "firebase/auth";
 
 export default function Register() {
+    const { createUser } = useContext(AuthContext);
+
+    const handleCreateUser = (e) => {
+        e.preventDefault();
+        const name = e.target.name.value;
+        const email = e.target.email.value;
+        const photoUrl = e.target.photoUrl.value;
+        const password = e.target.password.value;
+
+        createUser(email, password, name, photoUrl)
+            .then((result) => {
+                updateProfile(auth.currentUser, {
+                    displayName: name, photoURL: photoUrl
+                }).then(() => {
+                    alert("Success")
+                }).catch((err) => {
+                    alert(err.message)
+                });
+            }).catch((error) => {
+                alert(error.message)
+            });
+    }
     return (
         <div className="md:grid md:grid-cols-2 md:gap-20 md:items-center items-center">
             <img className="hidden md:flex w-full h-auto" src="register.avif" alt="" />
@@ -14,12 +40,12 @@ export default function Register() {
                 <Typography className="text-center pt-3" variant="h4" color="blue-gray">
                     Sign Up
                 </Typography>
-                <form className="mt-8 mb-2 px-14">
+                <form onSubmit={handleCreateUser} className="mt-8 mb-2 px-14">
                     <div className="mb-1 flex flex-col gap-6">
-                        <Input variant="standard" label="Name" placeholder="Email" />
-                        <Input variant="standard" label="Email" placeholder="Email" />
-                        <Input variant="standard" label="Photo URL" placeholder="Email" />
-                        <Input variant="standard" label="Password" placeholder="Email" />
+                        <Input name="name" type="text" variant="standard" label="Name" placeholder="Email" />
+                        <Input name="email" type="email" variant="standard" label="Email" placeholder="Email" />
+                        <Input name="photoUrl" type="text" variant="standard" label="Photo URL" placeholder="Email" />
+                        <Input name="password" type="password" variant="standard" label="Password" placeholder="Email" />
                     </div>
                     <Checkbox
                         label={
