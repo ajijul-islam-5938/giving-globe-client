@@ -6,10 +6,12 @@ import Navbarr from '../Navbar/Navbar';
 
 const Root = () => {
     return (
-        <div>
-            <Navbarr/>
-            <Outlet/>
-            <Footer/>
+        <div className='w-full mx-auto'>
+            <Navbarr />
+            <div className="w-[98%] md:w-[90%] mx-auto">
+                <Outlet />
+            </div>
+            <Footer />
         </div>
     );
 };
