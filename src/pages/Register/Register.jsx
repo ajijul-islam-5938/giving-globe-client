@@ -2,7 +2,6 @@ import {
     Card,
     Input,
     Checkbox,
-    Button,
     Typography,
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
@@ -11,11 +10,11 @@ export default function Register() {
     return (
         <div className="md:grid md:grid-cols-2 md:gap-20 md:items-center items-center">
             <img className="hidden md:flex w-full h-auto" src="register.avif" alt="" />
-            <Card className=" w-full my-32 mx-auto border py-5" color="transparent">
+            <Card className="w-[95%] md:w-full my-32 mx-auto border py-5" color="transparent">
                 <Typography className="text-center pt-3" variant="h4" color="blue-gray">
                     Sign Up
                 </Typography>
-                <form className="mt-8 mb-2 w-full mx-auto px-20">
+                <form className="mt-8 mb-2 px-14">
                     <div className="mb-1 flex flex-col gap-6">
                         <Input variant="standard" label="Name" placeholder="Email" />
                         <Input variant="standard" label="Email" placeholder="Email" />
