@@ -78,18 +78,16 @@ export default function StickyNavbar() {
         },
     ];
     return (
-        <Navbar className="sticky top-0 z-10 h-max max-w-full rounded-none px-4 py-2 lg:px-8 lg:py-4">
+        <Navbar className="fixed top-0 z-10 h-max max-w-full rounded-none px-4 py-2 lg:px-8 lg:py-4">
             <div className="flex items-center justify-between text-blue-gray-900">
-                <Typography
-                    as="a"
-                    href="#"
+                <Link to="/"
                     className="mr-4 cursor-pointer py-1.5 font-medium"
                 >
                     <div className=" font-bold md:text-2xl lg:text-3xl text-center">
                         <span className="text-blue-500">Giving</span><span className="text-green-500">Globe</span>
                     </div>
 
-                </Typography>
+                </Link>
                 <div className="flex items-center gap-3 md:gap-10">
                     <div className="mx-auto hidden lg:block">{navList}</div>
                     <div className="flex items-center gap-x-1 ">
@@ -214,7 +212,7 @@ export default function StickyNavbar() {
                         <Link to="/login">Log In</Link>
                     </Button>
                     <Button fullWidth variant="gradient" size="sm" className="">
-                        <Link to="/register">Sign in</Link>
+                        <Link to="/register" >Sign in</Link>
                     </Button>
                 </div>
             </MobileNav>
