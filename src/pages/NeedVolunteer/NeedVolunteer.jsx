@@ -1,10 +1,25 @@
-import { Button, IconButton, Input } from '@material-tailwind/react';
-import React from 'react';
+import { Button, IconButton, Input, Spinner } from '@material-tailwind/react';
+import { useQuery } from '@tanstack/react-query';
+import React, { useState } from 'react';
 import { TbZoomReset } from 'react-icons/tb';
+import PostCard from '../../components/PostCard/PostCard';
 
 const NeedVolunteer = () => {
-    const [text, setText] = React.useState("");
+    const [text, setText] = useState("");
     const onChange = ({ target }) => setText(target.value);
+
+    const {data:posts,isPending} = useQuery({
+        queryKey: ["posts"],
+        queryFn: async()=>{
+            const res = await fetch("http://localhost:3000/volunteerposts");
+            return res.json();
+        }
+    });
+
+    if(isPending){
+        return <Spinner className="mt-16 m-auto h-16 w-16 text-gray-900/50" />
+    }
+
     return (
         <div className='my-28'>
             <h1 className="text-2xl font-bold text-center">Need Volunteers</h1>
@@ -33,8 +48,10 @@ const NeedVolunteer = () => {
                     <TbZoomReset />
                 </IconButton>
             </div>
-            <div className="my-20">
-                
+            <div className="my-20 grid md:grid-cols-3 gap-16 mt-28 mb-10">
+                {
+                    posts.map(post=> <PostCard key={post._id} post={post}/>)
+                }
             </div>
         </div>
     );
