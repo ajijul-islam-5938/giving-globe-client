@@ -1,202 +1,172 @@
+import React, { useContext, useState } from 'react';
 import {
     Card,
-    CardHeader,
-    CardBody,
-    CardFooter,
-    Typography,
+    Input,
     Button,
+    Typography,
+    CardBody,
+    CardHeader,
+    CardFooter,
 } from "@material-tailwind/react";
-import {
-    Drawer,
-    IconButton,
-} from "@material-tailwind/react";
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import DatePicker from 'react-datepicker';
+import { Drawer, IconButton } from "@material-tailwind/react";
+import { AuthContext } from "../../Providers/AuthProvider/AuthProvider";
+import axios from 'axios';
 
 export default function PostDetailsCard({ post }) {
-    // const { thumbnail, post_title, category, location, volunteers_needed, deadline, organizer_name, organizer_email, _id } = post;
-    const openModal = () => {
-        alert()
+
+    const handleRequest = (e) => {
+        e.preventDefault();
+        const thumbnail = e.target.thumbnail.value;
+        const post_title = e.target.postTitle.value;
+        const description = e.target.description.value;
+        const category = e.target.category.value;
+        const location = e.target.location.value;
+        const volunteers_needed = e.target.volunteersNeeded.value;
+        const organizer_name = e.target.organizerName.value;
+        const organizer_email = e.target.organizerEmail.value;
+        const deadline = e.target.deadline.value;
+
+        // Additional inputs
+        const volunteer_name = e.target.volunteerName.value;
+        const volunteer_email = e.target.volunteerEmail.value;
+        const suggesion = e.target.suggesion.value;
+
+        const formData = {
+            thumbnail,
+            post_title,
+            description,
+            category,
+            location,
+            volunteers_needed,
+            organizer_name,
+            organizer_email,
+            deadline,
+            volunteer_name,
+            volunteer_email,
+            suggesion,
+            status : "requested"
+        }
+
+        axios.post("http://localhost:3000/requestedpost",formData)
+        .then(res => console.log(res.data))
+        console.log(formData);
     }
 
+    const { user } = useContext(AuthContext)
 
-    const [openTop, setOpenTop] = useState(false);
-    const [openRight, setOpenRight] = useState(false);
     const [openBottom, setOpenBottom] = useState(false);
-    const [openLeft, setOpenLeft] = useState(false);
-
-    const closeDrawerTop = () => setOpenTop(false);
-    const closeDrawerRight = () => setOpenRight(false);
     const openDrawerBottom = () => setOpenBottom(true);
     const closeDrawerBottom = () => setOpenBottom(false);
-    const closeDrawerLeft = () => setOpenLeft(false);
+
     return (
         <Card className="mt-6">
             <React.Fragment>
-
-                <Drawer
-                    placement="top"
-                    open={openTop}
-                    onClose={closeDrawerTop}
-                    className="p-4"
-                >
-                    <div className="mb-6 flex items-center justify-between">
-                        <Typography variant="h5" color="blue-gray">
-                            Material Tailwind
-                        </Typography>
-                        <IconButton variant="text" color="blue-gray" onClick={closeDrawerTop}>
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                strokeWidth={2}
-                                stroke="currentColor"
-                                className="h-5 w-5"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M6 18L18 6M6 6l12 12"
-                                />
-                            </svg>
-                        </IconButton>
-                    </div>
-                    <Typography color="gray" className="mb-8 pr-4 font-normal">
-                        Material Tailwind features multiple React and HTML components, all
-                        written with Tailwind CSS classes and Material Design guidelines.
-                    </Typography>
-                    <div className="flex gap-2">
-                        <Button size="sm" variant="outlined">
-                            Documentation
-                        </Button>
-                        <Button size="sm">Get Started</Button>
-                    </div>
-                </Drawer>
-                <Drawer
-                    placement="right"
-                    open={openRight}
-                    onClose={closeDrawerRight}
-                    className="p-4"
-                >
-                    <div className="mb-6 flex items-center justify-between">
-                        <Typography variant="h5" color="blue-gray">
-                            Material Tailwind
-                        </Typography>
-                        <IconButton
-                            variant="text"
-                            color="blue-gray"
-                            onClick={closeDrawerRight}
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                strokeWidth={2}
-                                stroke="currentColor"
-                                className="h-5 w-5"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M6 18L18 6M6 6l12 12"
-                                />
-                            </svg>
-                        </IconButton>
-                    </div>
-                    <Typography color="gray" className="mb-8 pr-4 font-normal">
-                        Material Tailwind features multiple React and HTML components, all
-                        written with Tailwind CSS classes and Material Design guidelines.
-                    </Typography>
-                    <div className="flex gap-2">
-                        <Button size="sm" variant="outlined">
-                            Documentation
-                        </Button>
-                        <Button size="sm">Get Started</Button>
-                    </div>
-                </Drawer>
                 <Drawer
                     placement="bottom"
                     open={openBottom}
                     onClose={closeDrawerBottom}
                     className="p-4"
                 >
-                    <div className="mb-6 flex items-center justify-between">
-                        <Typography variant="h5" color="blue-gray">
-                            Material Tailwind
-                        </Typography>
-                        <IconButton
-                            variant="text"
-                            color="blue-gray"
-                            onClick={closeDrawerBottom}
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                strokeWidth={2}
-                                stroke="currentColor"
-                                className="h-5 w-5"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M6 18L18 6M6 6l12 12"
+                    <form onSubmit={handleRequest} className="mt-8 mb-2 w-[90%] lg:w-[80%] mx-auto">
+                        <div className="grid md:grid-cols-4 gap-6 mb-1">
+                            <Input
+                                variant="standard"
+                                label="Thumbnail"
+                                placeholder="Thumbnail"
+                                name='thumbnail'
+                                defaultValue={post?.thumbnail}
+                                readOnly
+                            />
+                            <Input
+                                variant="standard"
+                                label="Post Title"
+                                placeholder="Post Title"
+                                name='postTitle'
+                                defaultValue={post?.post_title}
+                                readOnly
+                            />
+                            <Input
+                                variant="standard"
+                                label="Description"
+                                placeholder="Description"
+                                name='description'
+                                defaultValue={post?.description}
+                                readOnly
+                            />
+                            <Input
+                                variant="standard"
+                                label="Category"
+                                placeholder="Category"
+                                name='category'
+                                defaultValue={post?.category}
+                                readOnly
+                            />
+                            <Input
+                                variant="standard"
+                                label="Location"
+                                placeholder="Location"
+                                name='location'
+                                defaultValue={post?.location}
+                            />
+                            <Input
+                                variant="standard"
+                                label="No. of Volunteers Needed"
+                                placeholder="No. of Volunteers Needed"
+                                name='volunteersNeeded'
+                                defaultValue={post?.volunteers_needed}
+                                readOnly
+                            />
+                            <Input
+                                variant="standard"
+                                label="Organizer Name"
+                                placeholder="Organizer Name"
+                                name='organizerName'
+                                defaultValue={post?.organizer_name}
+                                readOnly
+                            />
+                            <Input
+                                variant="standard"
+                                label="Organizer Email"
+                                placeholder="Organizer Email"
+                                name='organizerEmail'
+                                defaultValue={post?.organizer_email}
+                                readOnly
+                            />
+                            <Input
+                                variant="standard"
+                                label="Volunteer Name"
+                                placeholder="Volunteer Name"
+                                name='volunteerName'
+                                defaultValue={user?.displayName}
+                                readOnly
+                            />
+                            <Input
+                                variant="standard"
+                                label="Volunteer Email"
+                                placeholder="Volunteer Email"
+                                name='volunteerEmail'
+                                defaultValue={user?.email}
+                                readOnly
+                            />
+                            <Input
+                                variant="standard"
+                                label="Suggestion"
+                                placeholder="Suggestion"
+                                name='suggesion'
+                            />
+                            <div className=''>
+                                <Input
+                                    type='date'
+                                    variant="standard"
+                                    label="Deadline"
+                                    placeholder="Deadline"
+                                    name='deadline'
                                 />
-                            </svg>
-                        </IconButton>
-                    </div>
-                    <Typography color="gray" className="mb-8 pr-4 font-normal">
-                        Material Tailwind features multiple React and HTML components, all
-                        written with Tailwind CSS classes and Material Design guidelines.
-                    </Typography>
-                    <div className="flex gap-2">
-                        <Button size="sm" variant="outlined">
-                            Documentation
-                        </Button>
-                        <Button size="sm">Get Started</Button>
-                    </div>
-                </Drawer>
-                <Drawer
-                    placement="left"
-                    open={openLeft}
-                    onClose={closeDrawerLeft}
-                    className="p-4"
-                >
-                    <div className="mb-6 flex items-center justify-between">
-                        <Typography variant="h5" color="blue-gray">
-                            Material Tailwind
-                        </Typography>
-                        <IconButton
-                            variant="text"
-                            color="blue-gray"
-                            onClick={closeDrawerLeft}
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                strokeWidth={2}
-                                stroke="currentColor"
-                                className="h-5 w-5"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M6 18L18 6M6 6l12 12"
-                                />
-                            </svg>
-                        </IconButton>
-                    </div>
-                    <Typography color="gray" className="mb-8 pr-4 font-normal">
-                        Material Tailwind features multiple React and HTML components, all
-                        written with Tailwind CSS classes and Material Design guidelines.
-                    </Typography>
-                    <div className="flex gap-2">
-                        <Button size="sm" variant="outlined">
-                            Documentation
-                        </Button>
-                        <Button size="sm">Get Started</Button>
-                    </div>
+                            </div>
+                        </div>
+                        <Input className='bg-neutral my-5' color='white' type='submit' value="Request" />
+                    </form>
                 </Drawer>
             </React.Fragment>
             <CardHeader color="blue-gray" className="relative h-96">
@@ -223,17 +193,16 @@ export default function PostDetailsCard({ post }) {
                     </div>
                     <div>
                         <Typography>
-                            <span className="font-bold">Deadline</span>{post?.deadline}
+                            <span className="font-bold">Deadline : </span>{post?.deadline}
                         </Typography>
                         <Typography>
-                            <span className="font-bold">Organaizer Email : </span> {post?.organizer_email}
+                            <span className="font-bold">Organizer Email : </span> {post?.organizer_email}
                         </Typography>
                         <Typography>
-                            <span className="font-bold">Organaizer Name : </span> {post?.organizer_name}
+                            <span className="font-bold">Organizer Name : </span> {post?.organizer_name}
                         </Typography>
                     </div>
                 </div>
-
             </CardBody>
             <CardFooter className="pt-0">
                 <Button onClick={openDrawerBottom} fullWidth>Be a Volunteer</Button>
