@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider/AuthProvider";
 import auth from "../../firebase/firebase.config";
 import { updateProfile } from "firebase/auth";
+import Swal from "sweetalert2";
 
 export default function Register() {
     const { createUser } = useContext(AuthContext);
@@ -25,12 +26,24 @@ export default function Register() {
                 updateProfile(auth.currentUser, {
                     displayName: name, photoURL: photoUrl
                 }).then(() => {
-                    alert("Success")
-                }).catch((err) => {
-                    alert(err.message)
+                    Swal.fire({
+                        icon: "success",
+                        title: "Awesome!!!",
+                        text: "Created Successfully",
+                    });
+                }).catch((error) => {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Ops!!!",
+                        text: `${error.message}`,
+                    });
                 });
             }).catch((error) => {
-                alert(error.message)
+                Swal.fire({
+                    icon: "error",
+                    title: "Ops!!!",
+                    text: `${error.message}`,
+                });
             });
     }
     return (

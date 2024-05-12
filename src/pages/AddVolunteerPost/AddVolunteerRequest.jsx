@@ -7,6 +7,7 @@ import {
 import DatePicker from 'react-datepicker';
 import axios from 'axios';
 import { AuthContext } from '../../Providers/AuthProvider/AuthProvider';
+import Swal from 'sweetalert2';
 
 const AddVolunteerRequest = () => {
 
@@ -56,8 +57,20 @@ const AddVolunteerRequest = () => {
             deadline,
         }
         console.log(formData);
-        axios.post("http://localhost:3000/addvolunteerpost",formData)
-        .then(res => alert(res))
+        axios.post("http://localhost:3000/addvolunteerpost", formData)
+            .then(res =>
+                Swal.fire({
+                    icon: "success",
+                    title: "Posted Success!!!",
+                    text: "Added to Database",
+                }))
+                .catch(error =>{
+                    Swal.fire({
+                        icon: "error",
+                        title: "Ops!!!",
+                        text: `${error.message}`,
+                      });
+                })
 
     };
 
@@ -73,42 +86,42 @@ const AddVolunteerRequest = () => {
                                 label="Thumbnail"
                                 placeholder="Thumbnail"
                                 name='thumbnail'
-                                // onChange={handleInputChange}
+                            // onChange={handleInputChange}
                             />
                             <Input
                                 variant="standard"
                                 label="Post Title"
                                 placeholder="Post Title"
                                 name='postTitle'
-                                // onChange={handleInputChange}
+                            // onChange={handleInputChange}
                             />
                             <Input
                                 variant="standard"
                                 label="Description"
                                 placeholder="Description"
                                 name='description'
-                                // onChange={handleInputChange}
+                            // onChange={handleInputChange}
                             />
                             <Input
                                 variant="standard"
                                 label="Category"
                                 placeholder="Category"
                                 name='category'
-                                // onChange={handleInputChange}
+                            // onChange={handleInputChange}
                             />
                             <Input
                                 variant="standard"
                                 label="Location"
                                 placeholder="Location"
                                 name='location'
-                                // onChange={handleInputChange}
+                            // onChange={handleInputChange}
                             />
                             <Input
                                 variant="standard"
                                 label="No. of Volunteers Needed"
                                 placeholder="No. of Volunteers Needed"
                                 name='volunteersNeeded'
-                                // onChange={handleInputChange}
+                            // onChange={handleInputChange}
                             />
                             <Input
                                 variant="standard"
@@ -135,7 +148,7 @@ const AddVolunteerRequest = () => {
                                     label="Deadline"
                                     placeholder="Deadline"
                                     name='deadline'
-                                    // onChange={handleInputChange}
+                                // onChange={handleInputChange}
                                 />
                             </div>
                         </div>

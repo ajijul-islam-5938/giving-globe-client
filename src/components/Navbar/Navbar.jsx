@@ -22,15 +22,24 @@ import { MdPostAdd } from "react-icons/md";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { SiManageiq } from "react-icons/si";
 import { VscGitPullRequestGoToChanges } from "react-icons/vsc";
+import Swal from "sweetalert2";
 
 export default function StickyNavbar() {
     const { user } = useContext(AuthContext);
     const handleLogOut = () => {
         signOut(auth)
             .then((result) => {
-                alert("success")
+                Swal.fire({
+                    icon: "success",
+                    title: "Awesome",
+                    text: "Logged Out",
+                  });
             }).catch((error) => {
-                alert(error.message)
+                Swal.fire({
+                    icon: "error",
+                    title: "Ops!!!",
+                    text: `${error.message}`,
+                  });
             });
     }
     const [openNav, setOpenNav] = React.useState(false);

@@ -12,6 +12,7 @@ import DatePicker from 'react-datepicker';
 import { Drawer, IconButton } from "@material-tailwind/react";
 import { AuthContext } from "../../Providers/AuthProvider/AuthProvider";
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 export default function PostDetailsCard({ post }) {
 
@@ -45,11 +46,24 @@ export default function PostDetailsCard({ post }) {
             volunteer_name,
             volunteer_email,
             suggesion,
-            status : "requested"
+            status: "requested"
         }
 
-        axios.post("http://localhost:3000/requestedpost",formData)
-        .then(res => console.log(res.data))
+        axios.post("http://localhost:3000/requestedpost", formData)
+            .then(res => {
+                Swal.fire({
+                    icon: "success",
+                    title: "Success!!!",
+                    text: "Request Sent",
+                });
+            })
+            .catch(error => {
+                Swal.fire({
+                    icon: "error",
+                    title: "Ops!!!",
+                    text: `${error.message}`,
+                });
+            })
         console.log(formData);
     }
 

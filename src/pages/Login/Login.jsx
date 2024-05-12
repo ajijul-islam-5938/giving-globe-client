@@ -10,6 +10,7 @@ import { useContext } from "react";
 import { IoLogoGithub, IoLogoGoogle } from "react-icons/io";
 import { Link, Navigate, useLocation, useNavigate, } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider/AuthProvider";
+import Swal from "sweetalert2";
 
 export default function Login() {
     const { googleSignIn, githubSignIn, signInEmailPassword } = useContext(AuthContext);
@@ -24,10 +25,18 @@ export default function Login() {
     const handleGoogle = () => {
         googleSignIn()
             .then((result) => {
-                alert("success");
+                Swal.fire({
+                    icon: "success",
+                    title: "Awesome!!!",
+                    text: "Login success",
+                  });
                 navigate(state ? state : "/");
             }).catch((error) => {
-                alert(error.message)
+                Swal.fire({
+                    icon: "error",
+                    title: "Ops!!!",
+                    text: `${error.message}`,
+                  });
             });
     }
 
@@ -35,10 +44,18 @@ export default function Login() {
     const handleGithub = () => {
         githubSignIn()
             .then((result) => {
-                alert("success");
+                Swal.fire({
+                    icon: "success",
+                    title: "Awesome!!!",
+                    text: "Login success",
+                  });
                 navigate(state ? state : "/");
             }).catch((error) => {
-                alert(error.message)
+                Swal.fire({
+                    icon: "error",
+                    title: "Ops!!!",
+                    text: `${error.message}`,
+                  });
             });
     }
 
@@ -49,10 +66,18 @@ export default function Login() {
         const password = e.target.password.value;
         signInEmailPassword(email, password)
             .then((result) => {
-                alert("success");
+                Swal.fire({
+                    icon: "success",
+                    title: "Awesome!!!",
+                    text: "Login success",
+                  });
                 navigate(state ? state : "/");
             }).catch((error) => {
-                alert(error.message)
+                Swal.fire({
+                    icon: "error",
+                    title: "Ops!!!",
+                    text: `${error.message}`,
+                  });
             });
     }
     return (

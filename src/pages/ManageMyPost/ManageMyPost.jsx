@@ -16,6 +16,14 @@ const ManageMyPost = () => {
         }
     })
 
+    const { data: requested} = useQuery({
+        queryKey: ["requested"],
+        queryFn: async () => {
+            const res = await fetch(`http://localhost:3000/requestedpost?email=${user.email}`);
+            return res.json();
+        }
+    })
+
     console.log(TABLE_ROWS);
     const TABLE_HEAD = ["Title", "Category", "Location", "DeadLine", ""];
     return (
@@ -135,7 +143,7 @@ const ManageMyPost = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {TABLE_ROWS?.map(({ post_title, category, location, deadline }, index) => {
+                                    {requested?.map(({ post_title, category, location, deadline }, index) => {
                                         const isLast = index === TABLE_ROWS.length - 1;
                                         const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
 
