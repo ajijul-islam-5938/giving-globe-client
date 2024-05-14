@@ -11,6 +11,7 @@ import { IoLogoGithub, IoLogoGoogle } from "react-icons/io";
 import { Link, Navigate, useLocation, useNavigate, } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider/AuthProvider";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet";
 
 export default function Login() {
     const { googleSignIn, githubSignIn, signInEmailPassword } = useContext(AuthContext);
@@ -82,6 +83,9 @@ export default function Login() {
     }
     return (
         <div className="my-20 md:grid grid-cols-2 items-center rounded-3xl">
+            <Helmet>
+                <title>Login Page</title>
+            </Helmet>
             <img className=" hidden md:flex w-full h-full" src="signIn.avif" alt="" />
             <Card className="w-[95%] mx-auto md:w-full h-[75vh] border flex flex-row justify-center items-center">
                 <form onSubmit={handleLogin} className="w-full">

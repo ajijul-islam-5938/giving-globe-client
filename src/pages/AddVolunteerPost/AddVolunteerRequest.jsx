@@ -8,6 +8,7 @@ import DatePicker from 'react-datepicker';
 import axios from 'axios';
 import { AuthContext } from '../../Providers/AuthProvider/AuthProvider';
 import Swal from 'sweetalert2';
+import { Helmet } from 'react-helmet';
 
 const AddVolunteerRequest = () => {
 
@@ -57,25 +58,29 @@ const AddVolunteerRequest = () => {
             deadline,
         }
         console.log(formData);
-        axios.post("http://localhost:3000/addvolunteerpost", formData)
+        axios.post("https://b9a11-server-tau.vercel.app/addvolunteerpost", formData)
             .then(res =>
                 Swal.fire({
                     icon: "success",
                     title: "Posted Success!!!",
                     text: "Added to Database",
                 }))
-                .catch(error =>{
-                    Swal.fire({
-                        icon: "error",
-                        title: "Ops!!!",
-                        text: `${error.message}`,
-                      });
-                })
+            .catch(error => {
+                Swal.fire({
+                    icon: "error",
+                    title: "Ops!!!",
+                    text: `${error.message}`,
+                });
+            })
 
     };
 
     return (
         <div className='my-28'>
+            <Helmet>
+                <title>Add Volunteer Request</title>
+            </Helmet>
+
             <h1 className="text-2xl text-center font-bold">Add Post</h1>
             <div>
                 <Card color="transparent" shadow={false}>

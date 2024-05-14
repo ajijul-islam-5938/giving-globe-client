@@ -4,6 +4,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../Providers/AuthProvider/AuthProvider';
 import { useContext } from 'react';
+import { Helmet } from 'react-helmet';
 
 const MyVolunteerRequest = () => {
     const { user } = useContext(AuthContext)
@@ -19,7 +20,7 @@ const MyVolunteerRequest = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`http://localhost:3000/requestedpost/${id}`)
+                axios.delete(`https://b9a11-server-tau.vercel.app/requestedpost/${id}`)
                     .then(res => {
                         Swal.fire({
                             title: "Deleted!",
@@ -41,13 +42,16 @@ const MyVolunteerRequest = () => {
     const { data: requested } = useQuery({
         queryKey: ["requested"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:3000/requestedpost?email=${user.email}`);
+            const res = await fetch(`https://b9a11-server-tau.vercel.app/requestedpost?email=${user.email}`);
             return res.json();
         }
     })
 
     return (
         <div className='my-28'>
+            <Helmet>
+                <title>My requests</title>
+            </Helmet>
             <h1 className="text-2xl font-bold text-center my-16"> My Volunteer Request Post</h1>
             <div className="">
                 <Card className="h-full w-full overflow-scroll">

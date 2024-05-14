@@ -10,6 +10,7 @@ import { AuthContext } from "../../Providers/AuthProvider/AuthProvider";
 import auth from "../../firebase/firebase.config";
 import { updateProfile } from "firebase/auth";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet";
 
 export default function Register() {
     const { createUser } = useContext(AuthContext);
@@ -63,6 +64,9 @@ export default function Register() {
     }
     return (
         <div className="md:grid md:grid-cols-2 md:gap-20 md:items-center items-center">
+            <Helmet>
+                <title>Register</title>
+            </Helmet>
             <img className="hidden md:flex w-full h-auto" src="register.avif" alt="" />
             <Card className="w-[95%] md:w-full my-32 mx-auto border py-5" color="transparent">
                 <Typography className="text-center pt-3" variant="h4" color="blue-gray">

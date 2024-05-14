@@ -48,8 +48,14 @@ export default function PostDetailsCard({ post }) {
             suggesion,
             status: "requested"
         }
-
-        axios.post("http://localhost:3000/requestedpost", formData)
+        if(volunteers_needed < 1){
+            return   Swal.fire({
+                icon: "error",
+                title: "Bad luck !!!",
+                text: "No needed any volunteer",
+            });
+        }
+        axios.post("https://b9a11-server-tau.vercel.app/requestedpost", formData)
             .then(res => {
                 Swal.fire({
                     icon: "success",
@@ -83,7 +89,7 @@ export default function PostDetailsCard({ post }) {
                     className="p-4"
                 >
                     <form onSubmit={handleRequest} className="mt-8 mb-2 w-[90%] lg:w-[80%] mx-auto">
-                        <div className="grid md:grid-cols-4 gap-6 mb-1">
+                        <div className="grid overflow-hidden grid-cols-4 gap-6 mb-1">
                             <Input
                                 variant="standard"
                                 label="Thumbnail"
@@ -202,7 +208,7 @@ export default function PostDetailsCard({ post }) {
                             <span className="font-bold">Location: </span>{post?.location}
                         </Typography>
                         <Typography>
-                            <span className="font-bold">Volunteer Needed : </span>{post?.volunteers_needed}
+                            <span className="font-bold">Volunteer Needed : </span>{post?.volunteers_needed < 1 ? " No Needded" : post?.volunteers_needed}
                         </Typography>
                     </div>
                     <div>

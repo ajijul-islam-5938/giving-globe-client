@@ -5,6 +5,7 @@ import { AuthContext } from '../../Providers/AuthProvider/AuthProvider';
 import { useQuery } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 const ManageMyPost = () => {
     const { user } = useContext(AuthContext);
@@ -13,7 +14,7 @@ const ManageMyPost = () => {
     const { data: TABLE_ROWS, isPending, error } = useQuery({
         queryKey: ["TABLE_ROWS"],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:3000/myposts?email=${user.email}`);
+            const res = await fetch(`https://b9a11-server-tau.vercel.app/myposts?email=${user.email}`);
             return res.json();
         }
     })
@@ -33,7 +34,7 @@ const ManageMyPost = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`http://localhost:3000/mypost/${id}`)
+                axios.delete(`https://b9a11-server-tau.vercel.app/mypost/${id}`)
                     .then(res => {
                         Swal.fire({
                             title: "Deleted!",
@@ -54,6 +55,9 @@ const ManageMyPost = () => {
 
     return (
         <div className='my-28'>
+            <Helmet>
+                <title>Mange post</title>
+            </Helmet>
             {/* Open the modal using document.getElementById('ID').showModal() method */}
             {/* <button className="btn" onClick={() => document.getElementById('my_modal_2').showModal()}>open modal</button> */}
   

@@ -2,6 +2,7 @@ import { Input } from '@material-tailwind/react';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
@@ -10,7 +11,7 @@ const Update = () => {
     const {data:post, isPending} = useQuery({
         queryKey: ["post"],
         queryFn: async()=>{
-            const res = await fetch(`http://localhost:3000/volunteerpost/${id.id}`);
+            const res = await fetch(`https://b9a11-server-tau.vercel.app/volunteerpost/${id.id}`);
             return res.json();
         }
     })
@@ -43,7 +44,7 @@ const Update = () => {
         
         }
 
-        axios.put(`http://localhost:3000/mypost/update/${post._id}`, formData)
+        axios.put(`https://b9a11-server-tau.vercel.app/mypost/update/${post._id}`, formData)
             .then(res => {
                 Swal.fire({
                     icon: "success",
@@ -62,6 +63,9 @@ const Update = () => {
     }
     return (
         <div>
+            <Helmet>
+                <title>Update post</title>
+            </Helmet>
             <h1 className="text-2xl text-center my-28 font-bold">Update</h1>
             <div className="">
                  

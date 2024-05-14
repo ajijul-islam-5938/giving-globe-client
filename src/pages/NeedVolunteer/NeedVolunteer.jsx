@@ -4,12 +4,13 @@ import React, { useEffect, useState } from 'react';
 import { TbZoomReset } from 'react-icons/tb';
 import PostCard from '../../components/PostCard/PostCard';
 import axios from 'axios';
+import { Helmet } from 'react-helmet';
 
 const NeedVolunteer = () => {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-        axios.get("http://localhost:3000/volunteerposts")
+        axios.get("https://b9a11-server-tau.vercel.app/volunteerposts")
             .then(data => setPosts(data.data))
     }, []);
 
@@ -17,17 +18,20 @@ const NeedVolunteer = () => {
     const onChange = ({ target }) => setText(target.value);
 
     const handleSearch = () => {
-        axios.get(`http://localhost:3000/mypost/search?text=${text}`)
+        axios.get(`https://b9a11-server-tau.vercel.app/mypost/search?text=${text}`)
             .then(data => setPosts(data.data))
     }
 
 
     const handleReset = () => {
-        axios.get("http://localhost:3000/volunteerposts")
+        axios.get("https://b9a11-server-tau.vercel.app/volunteerposts")
             .then(data => setPosts(data.data))
     }
     return (
         <div className='my-28'>
+            <Helmet>
+                <title>Need volunteer page</title>
+            </Helmet>
             <h1 className="text-2xl font-bold text-center">Need Volunteers</h1>
             <div className="flex justify-center items-center gap-10 my-16">
                 <div className="relative flex w-full max-w-[24rem]">
