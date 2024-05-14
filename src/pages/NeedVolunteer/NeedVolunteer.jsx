@@ -1,23 +1,31 @@
 import { Button, IconButton, Input, Spinner } from '@material-tailwind/react';
 import { useQuery } from '@tanstack/react-query';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TbZoomReset } from 'react-icons/tb';
 import PostCard from '../../components/PostCard/PostCard';
+import axios from 'axios';
 
 const NeedVolunteer = () => {
+    const [posts, setPosts] = useState([]);
+
+    useEffect(() => {
+        axios.get("http://localhost:3000/volunteerposts")
+            .then(data => setPosts(data.data))
+    }, []);
+
     const [text, setText] = useState("");
     const onChange = ({ target }) => setText(target.value);
 
-    const { data: posts, isPending } = useQuery({
-        queryKey: ["posts"],
-        queryFn: async () => {
-            const res = await fetch("http://localhost:3000/volunteerposts");
-            return res.json();
-        }
-    });
+    const handleSearch = () => {
+        axios.get(`http://localhost:3000/mypost/search?text=${text}`)
+            .then(data => setPosts(data.data))
+    }
 
 
-
+    const handleReset = () => {
+        axios.get("http://localhost:3000/volunteerposts")
+            .then(data => setPosts(data.data))
+    }
     return (
         <div className='my-28'>
             <h1 className="text-2xl font-bold text-center">Need Volunteers</h1>
@@ -38,21 +46,22 @@ const NeedVolunteer = () => {
                         color={text ? "gray" : "blue-gray"}
                         disabled={!text}
                         className="!absolute right-1 top-1 rounded"
+                        onClick={handleSearch}
                     >
                         Search
                     </Button>
                 </div>
-                <IconButton className='text-2xl' color="red">
+                <IconButton onClick={handleReset} className='text-2xl' color="red">
                     <TbZoomReset />
                 </IconButton>
             </div>
-            {isPending ? <Spinner className="mt-16 m-auto h-16 w-16 text-gray-900/50" />
-            :
+            {/* {isPending ? <Spinner className="mt-16 m-auto h-16 w-16 text-gray-900/50" /> */}
+            {/* : */}
             <div className="my-20 grid md:grid-cols-3 gap-16 mt-28 mb-10">
                 {
                     posts?.map(post => <PostCard key={post._id} post={post} />)
                 }
-            </div>}
+            </div>
         </div>
     );
 };

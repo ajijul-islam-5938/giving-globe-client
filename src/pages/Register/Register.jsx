@@ -21,6 +21,21 @@ export default function Register() {
         const photoUrl = e.target.photoUrl.value;
         const password = e.target.password.value;
 
+        if (!/^(?=.*[a-z])(?=.*[A-Z]).{6,}$/.test(password)) {
+           return  Swal.fire({
+                icon: "error",
+                title: "Ops!!!",
+                text: "Password must have at least 6 characters and contain both lowercase and uppercase letters",
+            });
+        }
+        if (email == "" || name == "" || photoUrl == "" || password == "") {
+            return Swal.fire({
+                icon: "error",
+                title: "Ops!!!",
+                text: "Fullfill All Required info",
+            });
+        }
+
         createUser(email, password, name, photoUrl)
             .then((result) => {
                 updateProfile(auth.currentUser, {

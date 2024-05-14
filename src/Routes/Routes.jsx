@@ -10,6 +10,7 @@ import ManageMyPost from "../pages/ManageMyPost/ManageMyPost";
 import MyVolunteerRequest from "../pages/MyVolunteerRequest/MyVolunteerRequest";
 import AddVolunteerRequest from "../pages/AddVolunteerPost/AddVolunteerRequest";
 import ViewDetails from "../pages/ViewDetails/ViewDetails";
+import Update from "../pages/Update/Update";
 
 const router = createBrowserRouter([
     {
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
         {
           path: "/postDetails/:id",
           element : <PrivateRoute><ViewDetails/></PrivateRoute>
+        },
+        {
+          path: "/mypost/update/:id",
+          element: <PrivateRoute><Update/></PrivateRoute>
         }
       ]
     },
