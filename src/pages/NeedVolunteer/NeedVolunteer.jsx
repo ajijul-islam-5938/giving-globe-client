@@ -5,31 +5,35 @@ import { TbZoomReset } from 'react-icons/tb';
 import PostCard from '../../components/PostCard/PostCard';
 import axios from 'axios';
 import { Helmet } from 'react-helmet';
+import { MdOutlineGridView } from 'react-icons/md';
+import { FaThList } from 'react-icons/fa';
+import Table from '../../components/Table/Table';
 
 const NeedVolunteer = () => {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-        axios.get("http://localhost:3000/volunteerposts",{
-            withCredentials : true,
+        axios.get("https://b9a11-server-tau.vercel.app/volunteerposts", {
+            withCredentials: true,
         })
             .then(data => setPosts(data.data))
     }, []);
 
     const [text, setText] = useState("");
+    const [grid, setGrid] = useState(false)
     const onChange = ({ target }) => setText(target.value);
 
     const handleSearch = () => {
-        axios.get(`http://localhost:3000/mypost/search?text=${text}`,{
-            withCredentials:true
+        axios.get(`https://b9a11-server-tau.vercel.app/mypost/search?text=${text}`, {
+            withCredentials: true
         })
             .then(data => setPosts(data.data))
     }
 
 
     const handleReset = () => {
-        axios.get("http://localhost:3000/volunteerposts",{
-            withCredentials:true
+        axios.get("https://b9a11-server-tau.vercel.app/volunteerposts", {
+            withCredentials: true
         })
             .then(data => setPosts(data.data))
     }
@@ -64,14 +68,24 @@ const NeedVolunteer = () => {
                 <IconButton onClick={handleReset} className='text-2xl' color="red">
                     <TbZoomReset />
                 </IconButton>
+                <div role="tablist" className="tabs tabs-boxed">
+                    <input className='hidden' onChange={(e) => setGrid(!grid)} id="check" type="checkbox" />
+                    <label role='tab' className={`tab ${grid && "tab-active"} text-2xl`} htmlFor="check"><MdOutlineGridView /></label>
+                    <label role='tab' className={`tab ${!grid && "tab-active"} text-2xl`} htmlFor="check"><FaThList /></label>
+                </div>
             </div>
-            {/* {isPending ? <Spinner className="mt-16 m-auto h-16 w-16 text-gray-900/50" /> */}
-            {/* : */}
-            <div className="my-20 grid md:grid-cols-3 gap-16 mt-28 mb-10">
+            {grid && <div className="my-20 grid md:grid-cols-3 gap-16 mt-28 mb-10">
                 {
                     posts?.map(post => <PostCard key={post._id} post={post} />)
+
                 }
-            </div>
+            </div>}
+            {!grid && <div className="my-20">
+                {
+                    <Table posts={posts}/>
+
+                }
+            </div>}
         </div>
     );
 };

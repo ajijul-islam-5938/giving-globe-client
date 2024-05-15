@@ -12,7 +12,7 @@ const ViewDetails = () => {
     // const {data:post, isPending} = useQuery({
     //     queryKey: ["post"],
     //     queryFn: async()=>{
-    //         const res = await fetch(`http://localhost:3000/volunteerpost/${id?.id}`);
+    //         const res = await fetch(`https://b9a11-server-tau.vercel.app/volunteerpost/${id?.id}`);
     //         return res.json();
     //     }
     // })

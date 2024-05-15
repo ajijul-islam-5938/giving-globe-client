@@ -8,7 +8,7 @@ import { Helmet } from 'react-helmet';
 
 const MyVolunteerRequest = () => {
     const { user } = useContext(AuthContext)
-    const TABLE_HEAD = ["Title", "Category", "Location", "DeadLine", ""];
+    const TABLE_HEAD = ["Title", "Category", "Location", "DeadLine", "Status", "Action"];
     const handleCancel = (id) => {
         Swal.fire({
             title: "Are you sure?",
@@ -20,11 +20,11 @@ const MyVolunteerRequest = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`http://localhost:3000/requestedpost/${id}`,{
-                    withCredentials:true
+                axios.delete(`https://b9a11-server-tau.vercel.app/requestedpost/${id}`, {
+                    withCredentials: true
                 })
                     .then(res => {
-                        const remaining = TABLE_ROWS.filter( table => table._id !==id);
+                        const remaining = TABLE_ROWS.filter(table => table._id !== id);
                         setTABLE_ROWS(remaining)
                         Swal.fire({
                             title: "Deleted!",
@@ -43,22 +43,14 @@ const MyVolunteerRequest = () => {
         });
     }
 
-    const [TABLE_ROWS,setTABLE_ROWS] = useState([]);
+    const [TABLE_ROWS, setTABLE_ROWS] = useState([]);
 
 
-    axios.get(`http://localhost:3000/requestedpost?email=${user.email}`,{
-        withCredentials:true
+    axios.get(`https://b9a11-server-tau.vercel.app/requestedpost?email=${user.email}`, {
+        withCredentials: true
     })
-    .then(data => setTABLE_ROWS(data.data))
-    .catch(err => console.log(err))
-
-    // const { data: requested } = useQuery({
-    //     queryKey: ["requested"],
-    //     queryFn: async () => {
-    //         const res = await fetch(`http://localhost:3000/requestedpost?email=${user.email}`);
-    //         return res.json();
-    //     }
-    // })
+        .then(data => setTABLE_ROWS(data.data))
+        .catch(err => console.log(err))
 
     return (
         <div className='my-28'>
@@ -90,7 +82,7 @@ const MyVolunteerRequest = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {TABLE_ROWS?.map(({ post_title, category, location, deadline, _id }, index) => {
+                                    {TABLE_ROWS?.map(({ post_title, category, location, deadline, status, _id }, index) => {
                                         const isLast = index === TABLE_ROWS.length - 1;
                                         const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
 
@@ -130,6 +122,15 @@ const MyVolunteerRequest = () => {
                                                         className="font-normal"
                                                     >
                                                         {deadline}
+                                                    </Typography>
+                                                </td>
+                                                <td className={classes}>
+                                                    <Typography
+                                                        variant="small"
+                                                        color="blue-gray"
+                                                        className="badge badge-secondary badge-lg text-white"
+                                                    >
+                                                        {status}
                                                     </Typography>
                                                 </td>
                                                 <td className={classes}>

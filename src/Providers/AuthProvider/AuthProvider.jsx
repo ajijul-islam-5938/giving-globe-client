@@ -38,7 +38,7 @@ const AuthProvider = ({ children }) => {
             setLoading(false);
             if (currentUser) {
                 const user = { email: currentUser.email }
-                axios.post(`http://localhost:3000/jwt`, user,{
+                axios.post(`https://b9a11-server-tau.vercel.app/jwt`, user,{
                     withCredentials: true
                 })
                 .then(res => console.log("token",res.data))

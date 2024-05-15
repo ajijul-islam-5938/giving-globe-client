@@ -13,7 +13,7 @@ const ManageMyPost = () => {
     const [TABLE_ROWS,setTABLE_ROWS] = useState([]);
 
 
-    axios.get(`http://localhost:3000/myposts?email=${user.email}`,{
+    axios.get(`https://b9a11-server-tau.vercel.app/myposts?email=${user.email}`,{
         withCredentials:true
     })
     .then(data => setTABLE_ROWS(data.data))
@@ -23,7 +23,7 @@ const ManageMyPost = () => {
     // const { data: TABLE_ROWS, isPending, error } = useQuery({
     //     queryKey: ["TABLE_ROWS"],
     //     queryFn: async () => {
-    //         const res = await fetch(`http://localhost:3000/myposts?email=${user.email}`);
+    //         const res = await fetch(`https://b9a11-server-tau.vercel.app/myposts?email=${user.email}`);
     //         return res.json();
     //     }
     // })
@@ -45,7 +45,7 @@ const ManageMyPost = () => {
             if (result.isConfirmed) {
                 const remaining = TABLE_ROWS.filter( table => table._id !==id);
                 setTABLE_ROWS(remaining)
-                axios.delete(`http://localhost:3000/mypost/${id}`,{
+                axios.delete(`https://b9a11-server-tau.vercel.app/mypost/${id}`,{
                     withCredentials: true
                 })
                     .then(res => {

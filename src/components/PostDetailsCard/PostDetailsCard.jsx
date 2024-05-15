@@ -19,16 +19,16 @@ import { useQuery } from '@tanstack/react-query';
 export default function PostDetailsCard() {
 
     const id = useParams();
-    console.log(id);
+    // console.log(id);
     const [post,setPost] = useState([]);
-    axios.get(`http://localhost:3000/volunteerpost/${id?.id}`,{
+    axios.get(`https://b9a11-server-tau.vercel.app/volunteerpost/${id?.id}`,{
         withCredentials: true
     })
     .then(data => setPost(data.data))
     // const {data:post, isPending} = useQuery({
     //     queryKey: ["post"],
     //     queryFn: async()=>{
-    //         const res = await fetch(`http://localhost:3000/volunteerpost/${id?.id}`);
+    //         const res = await fetch(`https://b9a11-server-tau.vercel.app/volunteerpost/${id?.id}`);
     //         return res.json();
     //     }
     // })
@@ -62,8 +62,9 @@ export default function PostDetailsCard() {
             volunteer_name,
             volunteer_email,
             suggesion,
-            status: "requested"
+            status: "Requested"
         }
+        alert(JSON.stringify(formData))
         if(volunteers_needed < 1){
             return   Swal.fire({
                 icon: "error",
@@ -71,10 +72,15 @@ export default function PostDetailsCard() {
                 text: "No needed any volunteer",
             });
         }
-        axios.post("http://localhost:3000/requestedpost", formData,{
+        axios.post("https://b9a11-server-tau.vercel.app/requestedpost", formData,{
             withCredentials: true
         })
             .then(res => {
+                axios.patch(`https://b9a11-server-tau.vercel.app/volunteerpost/decrease/${id.id}`,{
+                    withCredentials: true
+                })
+                .then(res => alert("ok"))
+                .catch(err => console.log(err))
                 Swal.fire({
                     icon: "success",
                     title: "Success!!!",
@@ -109,7 +115,7 @@ export default function PostDetailsCard() {
                     <form onSubmit={handleRequest} className="mt-8 mb-2 w-[90%] lg:w-[80%] mx-auto">
                         <div className="grid overflow-hidden grid-cols-4 gap-6 mb-1">
                             <Input
-                                variant="standard"
+                                // variant="standard"
                                 label="Thumbnail"
                                 placeholder="Thumbnail"
                                 name='thumbnail'
@@ -117,7 +123,7 @@ export default function PostDetailsCard() {
                                 readOnly
                             />
                             <Input
-                                variant="standard"
+                                // variant="standard"
                                 label="Post Title"
                                 placeholder="Post Title"
                                 name='postTitle'
@@ -125,7 +131,7 @@ export default function PostDetailsCard() {
                                 readOnly
                             />
                             <Input
-                                variant="standard"
+                                // variant="standard"
                                 label="Description"
                                 placeholder="Description"
                                 name='description'
@@ -133,7 +139,7 @@ export default function PostDetailsCard() {
                                 readOnly
                             />
                             <Input
-                                variant="standard"
+                                // variant="standard"
                                 label="Category"
                                 placeholder="Category"
                                 name='category'
@@ -141,14 +147,14 @@ export default function PostDetailsCard() {
                                 readOnly
                             />
                             <Input
-                                variant="standard"
+                                // variant="standard"
                                 label="Location"
                                 placeholder="Location"
                                 name='location'
                                 defaultValue={post?.location}
                             />
                             <Input
-                                variant="standard"
+                                // variant="standard"
                                 label="No. of Volunteers Needed"
                                 placeholder="No. of Volunteers Needed"
                                 name='volunteersNeeded'
@@ -156,7 +162,7 @@ export default function PostDetailsCard() {
                                 readOnly
                             />
                             <Input
-                                variant="standard"
+                                // variant="standard"
                                 label="Organizer Name"
                                 placeholder="Organizer Name"
                                 name='organizerName'
@@ -164,7 +170,7 @@ export default function PostDetailsCard() {
                                 readOnly
                             />
                             <Input
-                                variant="standard"
+                                // variant="standard"
                                 label="Organizer Email"
                                 placeholder="Organizer Email"
                                 name='organizerEmail'
@@ -172,7 +178,7 @@ export default function PostDetailsCard() {
                                 readOnly
                             />
                             <Input
-                                variant="standard"
+                                // variant="standard"
                                 label="Volunteer Name"
                                 placeholder="Volunteer Name"
                                 name='volunteerName'
@@ -180,7 +186,7 @@ export default function PostDetailsCard() {
                                 readOnly
                             />
                             <Input
-                                variant="standard"
+                                // variant="standard"
                                 label="Volunteer Email"
                                 placeholder="Volunteer Email"
                                 name='volunteerEmail'
@@ -188,20 +194,21 @@ export default function PostDetailsCard() {
                                 readOnly
                             />
                             <Input
-                                variant="standard"
+                                // variant="standard"
                                 label="Suggestion"
                                 placeholder="Suggestion"
                                 name='suggesion'
                             />
-                            <div className=''>
+                           
                                 <Input
-                                    type='date'
-                                    variant="standard"
+                                    type='text'
                                     label="Deadline"
                                     placeholder="Deadline"
                                     name='deadline'
+                                    defaultValue={post?.deadline}
+                                    readOnly
                                 />
-                            </div>
+                       
                         </div>
                         <Input className='bg-neutral my-5' color='white' type='submit' value="Request" />
                     </form>

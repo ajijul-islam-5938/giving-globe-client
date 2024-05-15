@@ -58,7 +58,7 @@ const AddVolunteerRequest = () => {
             deadline,
         }
         console.log(formData);
-        axios.post("http://localhost:3000/addvolunteerpost", formData,{
+        axios.post("https://b9a11-server-tau.vercel.app/addvolunteerpost", formData,{
             withCredentials:true
         })
             .then(res =>
