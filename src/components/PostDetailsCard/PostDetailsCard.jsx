@@ -13,9 +13,23 @@ import { Drawer, IconButton } from "@material-tailwind/react";
 import { AuthContext } from "../../Providers/AuthProvider/AuthProvider";
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { useParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 
-export default function PostDetailsCard({ post }) {
+export default function PostDetailsCard() {
 
+    const id = useParams();
+    console.log(id);
+    const [post,setPost] = useState([]);
+    axios.get(`http://localhost:3000/volunteerpost/${id?.id}`)
+    .then(data => setPost(data.data))
+    // const {data:post, isPending} = useQuery({
+    //     queryKey: ["post"],
+    //     queryFn: async()=>{
+    //         const res = await fetch(`http://localhost:3000/volunteerpost/${id?.id}`);
+    //         return res.json();
+    //     }
+    // })
     const handleRequest = (e) => {
         e.preventDefault();
         const thumbnail = e.target.thumbnail.value;
@@ -55,7 +69,7 @@ export default function PostDetailsCard({ post }) {
                 text: "No needed any volunteer",
             });
         }
-        axios.post("https://b9a11-server-tau.vercel.app/requestedpost", formData)
+        axios.post("http://localhost:3000/requestedpost", formData)
             .then(res => {
                 Swal.fire({
                     icon: "success",

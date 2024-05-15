@@ -11,7 +11,7 @@ const Update = () => {
     const {data:post, isPending} = useQuery({
         queryKey: ["post"],
         queryFn: async()=>{
-            const res = await fetch(`https://b9a11-server-tau.vercel.app/volunteerpost/${id.id}`);
+            const res = await fetch(`http://localhost:3000/volunteerpost/${id.id}`);
             return res.json();
         }
     })
@@ -44,7 +44,7 @@ const Update = () => {
         
         }
 
-        axios.put(`https://b9a11-server-tau.vercel.app/mypost/update/${post._id}`, formData)
+        axios.put(`http://localhost:3000/mypost/update/${post._id}`, formData)
             .then(res => {
                 Swal.fire({
                     icon: "success",

@@ -58,7 +58,7 @@ const AddVolunteerRequest = () => {
             deadline,
         }
         console.log(formData);
-        axios.post("https://b9a11-server-tau.vercel.app/addvolunteerpost", formData)
+        axios.post("http://localhost:3000/addvolunteerpost", formData)
             .then(res =>
                 Swal.fire({
                     icon: "success",

@@ -12,6 +12,7 @@ import { Link, Navigate, useLocation, useNavigate, } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider/AuthProvider";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet";
+import axios from "axios";
 
 export default function Login() {
     const { googleSignIn, githubSignIn, signInEmailPassword } = useContext(AuthContext);

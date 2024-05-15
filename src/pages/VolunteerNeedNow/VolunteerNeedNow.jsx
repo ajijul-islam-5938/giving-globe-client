@@ -8,7 +8,7 @@ const VolunteerNeedNow = () => {
     const { data: posts , isPending} = useQuery({
         queryKey: ["posts"],
         queryFn: async () => {
-            const res = await fetch("https://b9a11-server-tau.vercel.app/volunteerneednow")
+            const res = await fetch("http://localhost:3000/volunteerneednow")
             return res.json();
         }
     })

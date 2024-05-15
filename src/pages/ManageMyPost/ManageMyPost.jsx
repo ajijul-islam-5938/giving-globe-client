@@ -10,14 +10,18 @@ import { Helmet } from 'react-helmet';
 const ManageMyPost = () => {
     const { user } = useContext(AuthContext);
     // const [TABLE_ROWS, setTABLE_ROWS] = useState();
+    const [TABLE_ROWS,setTABLE_ROWS] = useState([]);
 
-    const { data: TABLE_ROWS, isPending, error } = useQuery({
-        queryKey: ["TABLE_ROWS"],
-        queryFn: async () => {
-            const res = await fetch(`https://b9a11-server-tau.vercel.app/myposts?email=${user.email}`);
-            return res.json();
-        }
-    })
+
+    axios.get(`http://localhost:3000/myposts?email=${user.email}`)
+    .then(data => setTABLE_ROWS(data.data));
+    // const { data: TABLE_ROWS, isPending, error } = useQuery({
+    //     queryKey: ["TABLE_ROWS"],
+    //     queryFn: async () => {
+    //         const res = await fetch(`http://localhost:3000/myposts?email=${user.email}`);
+    //         return res.json();
+    //     }
+    // })
 
 
     console.log(TABLE_ROWS);
@@ -34,7 +38,9 @@ const ManageMyPost = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`https://b9a11-server-tau.vercel.app/mypost/${id}`)
+                const remaining = TABLE_ROWS.filter( table => table._id !==id);
+                setTABLE_ROWS(remaining)
+                axios.delete(`http://localhost:3000/mypost/${id}`)
                     .then(res => {
                         Swal.fire({
                             title: "Deleted!",

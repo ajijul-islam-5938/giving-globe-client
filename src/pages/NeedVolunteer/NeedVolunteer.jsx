@@ -10,7 +10,7 @@ const NeedVolunteer = () => {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-        axios.get("https://b9a11-server-tau.vercel.app/volunteerposts")
+        axios.get("http://localhost:3000/volunteerposts")
             .then(data => setPosts(data.data))
     }, []);
 
@@ -18,13 +18,13 @@ const NeedVolunteer = () => {
     const onChange = ({ target }) => setText(target.value);
 
     const handleSearch = () => {
-        axios.get(`https://b9a11-server-tau.vercel.app/mypost/search?text=${text}`)
+        axios.get(`http://localhost:3000/mypost/search?text=${text}`)
             .then(data => setPosts(data.data))
     }
 
 
     const handleReset = () => {
-        axios.get("https://b9a11-server-tau.vercel.app/volunteerposts")
+        axios.get("http://localhost:3000/volunteerposts")
             .then(data => setPosts(data.data))
     }
     return (
