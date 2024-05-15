@@ -20,7 +20,7 @@ const NeedVolunteer = () => {
     }, []);
 
     const [text, setText] = useState("");
-    const [grid, setGrid] = useState(false)
+    const [grid, setGrid] = useState(true)
     const onChange = ({ target }) => setText(target.value);
 
     const handleSearch = () => {
@@ -43,7 +43,7 @@ const NeedVolunteer = () => {
                 <title>Need volunteer page</title>
             </Helmet>
             <h1 className="text-2xl font-bold text-center">Need Volunteers</h1>
-            <div className="flex justify-center items-center gap-10 my-16">
+            <div className="flex flex-col md:flex-row justify-center items-center gap-10 my-16">
                 <div className="relative flex w-full max-w-[24rem]">
                     <Input
                         type="text"
