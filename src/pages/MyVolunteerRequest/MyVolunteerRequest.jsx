@@ -20,7 +20,9 @@ const MyVolunteerRequest = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`http://localhost:3000/requestedpost/${id}`)
+                axios.delete(`http://localhost:3000/requestedpost/${id}`,{
+                    withCredentials:true
+                })
                     .then(res => {
                         const remaining = TABLE_ROWS.filter( table => table._id !==id);
                         setTABLE_ROWS(remaining)
@@ -44,8 +46,12 @@ const MyVolunteerRequest = () => {
     const [TABLE_ROWS,setTABLE_ROWS] = useState([]);
 
 
-    axios.get(`http://localhost:3000/requestedpost?email=${user.email}`)
-    .then(data => setTABLE_ROWS(data.data));
+    axios.get(`http://localhost:3000/requestedpost?email=${user.email}`,{
+        withCredentials:true
+    })
+    .then(data => setTABLE_ROWS(data.data))
+    .catch(err => console.log(err))
+
     // const { data: requested } = useQuery({
     //     queryKey: ["requested"],
     //     queryFn: async () => {

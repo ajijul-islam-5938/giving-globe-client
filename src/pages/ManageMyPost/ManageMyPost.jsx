@@ -13,8 +13,13 @@ const ManageMyPost = () => {
     const [TABLE_ROWS,setTABLE_ROWS] = useState([]);
 
 
-    axios.get(`http://localhost:3000/myposts?email=${user.email}`)
-    .then(data => setTABLE_ROWS(data.data));
+    axios.get(`http://localhost:3000/myposts?email=${user.email}`,{
+        withCredentials:true
+    })
+    .then(data => setTABLE_ROWS(data.data))
+    .catch(err => {
+        console.log(err);
+    })
     // const { data: TABLE_ROWS, isPending, error } = useQuery({
     //     queryKey: ["TABLE_ROWS"],
     //     queryFn: async () => {
@@ -40,7 +45,9 @@ const ManageMyPost = () => {
             if (result.isConfirmed) {
                 const remaining = TABLE_ROWS.filter( table => table._id !==id);
                 setTABLE_ROWS(remaining)
-                axios.delete(`http://localhost:3000/mypost/${id}`)
+                axios.delete(`http://localhost:3000/mypost/${id}`,{
+                    withCredentials: true
+                })
                     .then(res => {
                         Swal.fire({
                             title: "Deleted!",

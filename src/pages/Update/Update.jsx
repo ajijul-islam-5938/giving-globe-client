@@ -44,7 +44,9 @@ const Update = () => {
         
         }
 
-        axios.put(`http://localhost:3000/mypost/update/${post._id}`, formData)
+        axios.put(`http://localhost:3000/mypost/update/${post._id}`, formData,{
+            withCredentials:true
+        })
             .then(res => {
                 Swal.fire({
                     icon: "success",

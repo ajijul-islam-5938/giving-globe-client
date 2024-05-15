@@ -21,7 +21,9 @@ export default function PostDetailsCard() {
     const id = useParams();
     console.log(id);
     const [post,setPost] = useState([]);
-    axios.get(`http://localhost:3000/volunteerpost/${id?.id}`)
+    axios.get(`http://localhost:3000/volunteerpost/${id?.id}`,{
+        withCredentials: true
+    })
     .then(data => setPost(data.data))
     // const {data:post, isPending} = useQuery({
     //     queryKey: ["post"],
@@ -69,7 +71,9 @@ export default function PostDetailsCard() {
                 text: "No needed any volunteer",
             });
         }
-        axios.post("http://localhost:3000/requestedpost", formData)
+        axios.post("http://localhost:3000/requestedpost", formData,{
+            withCredentials: true
+        })
             .then(res => {
                 Swal.fire({
                     icon: "success",

@@ -58,7 +58,9 @@ const AddVolunteerRequest = () => {
             deadline,
         }
         console.log(formData);
-        axios.post("http://localhost:3000/addvolunteerpost", formData)
+        axios.post("http://localhost:3000/addvolunteerpost", formData,{
+            withCredentials:true
+        })
             .then(res =>
                 Swal.fire({
                     icon: "success",
